@@ -23,7 +23,9 @@ thing.set(v + 1);
 console.log(thing.get(v));
 ```
 
-Transform that into asynchronous, continuation-passing style.
+### Going asynchronous
+
+Transform that into asynchronous, continuation-passing style. Instead of a function returning a value back to its caller, the program continues by passing a value forward to the remaining code: calling a continuation function with a value.
 
 ```
 function makeThing(cb) {
@@ -49,8 +51,11 @@ makeThing(function (thing) {
 	});
 });
 ```
+Notice that things are very isolated. The actual process happening is invisible, but the flow is shown as lexical scopes.
 
-Unnest and name the callbacks
+### Break things apart
+
+Unnest and name the callbacks to escape nesting hell.
 
 ```
 function makeThing(cb) {
@@ -72,10 +77,10 @@ makeThing(handleThing);
 
 function handleThing(aThing) {
 	thing = aThing; // Export into the scope of the greater task
-	thing.get(doFirstAccess);
+	thing.get(updateValue);
 }
 
-function doFirstAccess(v) {
+function updateValue(v) {
 	thing.set(v + 1, verifySet);
 }
 	
@@ -88,7 +93,11 @@ function logResult(v) {
 }
 ```
 
-Refactor to use promises
+Notice that in this form, our shared state `thing` is extra visible because it's the only variable declared. All local variables are parameters to functions.
+
+At this point, the flow events have been named. It's easy to see what the program does, but not in what order.
+
+### Refactor to use promises.
 
 ```
 var Promisable = require('promisable');
@@ -108,14 +117,18 @@ function makeThing() {
 
 var thing;
 
-makeThing().then(function (aThing) {
+makeThing().then(function handleThing(aThing) {
 	thing = aThing;
 	return thing.get(resolve)
-}).then(function (v) {
+}).then(function updateValue(v) {
 	return thing.set(v + 1);
-}).then(function () {
+}).then(function verifySet() {
 	return thing.get(v);
-}).then(function (value) {
+}).then(function logResult(value) {
 	console.log(value);
 });
 ```
+
+Now our shared state `thing` is visible. Flow is top-to-bottom, and I've left the names of the functions in place  as commentary on what they do.
+
+This doesn't get to the style where you treat a promise as data that just isn't ready yet, and instead stays focused on flow control.
