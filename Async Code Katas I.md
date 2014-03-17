@@ -1,6 +1,6 @@
 # Asynchronous Javascript Code Katas
 
-## Part 1: Simple values, sequential flow
+## Part 1: Simple values, sequential flow, no errors
 
 Write a synchronous get function and set function. Get a value, set a value, get again.
 
