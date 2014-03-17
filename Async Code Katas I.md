@@ -19,8 +19,7 @@ function makeThing() {
 
 var thing = makeThing();
 var v = thing.get();
-v = v + 1;
-thing.set(v);
+thing.set(v + 1);
 console.log(thing.get(v));
 ```
 
@@ -42,8 +41,7 @@ function makeThing(cb) {
 
 makeThing(function (thing) {
 	thing.get(function(v) {
-		v = v + 1;
-		thing.set(v, function () {
+		thing.set(v + 1, function () {
 			thing.get(function (v) {
 				console.log(v);
 			});
@@ -78,8 +76,7 @@ function handleThing(aThing) {
 }
 
 function doFirstAccess(v) {
-	v = v + 1;
-	thing.set(v, verifySet);
+	thing.set(v + 1, verifySet);
 }
 	
 function verifySet() {
