@@ -18,7 +18,7 @@ function makeThing() {
 var thing = makeThing();
 var v = thing.get();
 thing.set(v + 1);
-console.log(thing.get(v));
+console.log(thing.get());
 ```
 
 ### Going asynchronous
@@ -121,7 +121,7 @@ makeThing().then(function handleThing(aThing) {
 }).then(function updateValue(v) {
 	return thing.set(v + 1);
 }).then(function verifySet() {
-	return thing.get(v);
+	return thing.get();
 }).then(function logResult(value) {
 	console.log(value);
 });
