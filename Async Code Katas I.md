@@ -2,7 +2,7 @@
 
 Write a synchronous get function and set function. Get a value, set a value, get again.
 
-```
+```js
 function makeThing() {
 	var val = 0;
 	return {
@@ -25,7 +25,7 @@ console.log(thing.get());
 
 Transform that into asynchronous, continuation-passing style. Instead of a function returning a value back to its caller, the program continues by passing a value forward to the remaining code: calling a continuation function with a value.
 
-```
+```js
 function makeThing(cb) {
 	var val = 0;
 	cb({
@@ -55,7 +55,7 @@ Notice that things are very isolated. The actual process happening is invisible,
 
 Unnest and name the callbacks to escape nesting hell.
 
-```
+```js
 function makeThing(cb) {
 	var val = 0;
 	cb({
@@ -97,7 +97,7 @@ At this point, the flow events have been named. It's easy to see what the progra
 
 ### Refactor to use promises.
 
-```
+```js
 var Promisable = require('promisable');
 
 function makeThing() {
