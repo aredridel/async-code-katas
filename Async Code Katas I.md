@@ -117,7 +117,7 @@ var thing;
 
 makeThing().then(function handleThing(aThing) {
 	thing = aThing;
-	return thing.get(resolve)
+	return thing.get()
 }).then(function updateValue(v) {
 	return thing.set(v + 1);
 }).then(function verifySet() {
